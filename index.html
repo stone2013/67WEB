@@ -8,32 +8,110 @@
     :root {
       color-scheme: light;
       --bg: #f5f7fb;
-      --card: #ffffff;
+      --bg-overlay-1: rgba(255, 179, 71, 0.28);
+      --bg-overlay-2: #fff7ed;
+      --bg-overlay-3: #eef2ff;
+      --card: rgba(255, 255, 255, 0.92);
+      --card-soft: rgba(255, 255, 255, 0.72);
       --text: #1f2937;
       --muted: #6b7280;
       --accent: #ff7a18;
       --accent-2: #ffb347;
+      --accent-text: #c2410c;
       --line: #e5e7eb;
       --success: #16a34a;
+      --success-bg: rgba(22, 163, 74, 0.14);
+      --tag-bg: #111827;
+      --tag-text: #ffffff;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      --button-secondary-bg: #ffffff;
+      --card-gradient-top: #ffffff;
+      --card-gradient-bottom: #f9fafb;
+    }
+
+    body.theme-monochrome {
+      --bg: #f2f2f2;
+      --bg-overlay-1: rgba(0, 0, 0, 0.08);
+      --bg-overlay-2: #fafafa;
+      --bg-overlay-3: #e5e5e5;
+      --card: rgba(255, 255, 255, 0.94);
+      --card-soft: rgba(248, 248, 248, 0.92);
+      --text: #111111;
+      --muted: #4b5563;
+      --accent: #111111;
+      --accent-2: #666666;
+      --accent-text: #111111;
+      --line: #d4d4d4;
+      --success: #111111;
+      --success-bg: rgba(17, 17, 17, 0.12);
+      --tag-bg: #111111;
+      --tag-text: #ffffff;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      --button-secondary-bg: #f8f8f8;
+      --card-gradient-top: #ffffff;
+      --card-gradient-bottom: #f0f0f0;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       background:
-        radial-gradient(circle at top right, rgba(255, 179, 71, 0.28), transparent 24rem),
-        linear-gradient(180deg, #fff7ed 0%, var(--bg) 28%, #eef2ff 100%);
+        radial-gradient(circle at top right, var(--bg-overlay-1), transparent 24rem),
+        linear-gradient(180deg, var(--bg-overlay-2) 0%, var(--bg) 28%, var(--bg-overlay-3) 100%);
       color: var(--text);
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     .wrap {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 48px 20px 72px;
+      padding: 32px 20px 72px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar-button {
+      min-width: 76px;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .toolbar-button.is-active {
+      background: var(--text);
+      color: #ffffff;
     }
 
     .hero {
@@ -47,11 +125,12 @@
     .price-card,
     .benefits,
     .faq {
-      background: rgba(255, 255, 255, 0.92);
+      background: var(--card);
       border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: 24px;
-      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+      transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .panel {
@@ -64,8 +143,8 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255, 122, 24, 0.12);
-      color: #c2410c;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent-text);
       font-size: 14px;
       font-weight: 700;
     }
@@ -102,17 +181,23 @@
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .button:hover,
+    .toolbar-button:hover {
+      transform: translateY(-1px);
     }
 
     .button-primary {
       color: #fff;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 14px 30px rgba(255, 122, 24, 0.28);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--accent) 28%, transparent);
     }
 
     .button-secondary {
       color: var(--text);
-      background: #fff;
+      background: var(--button-secondary-bg);
       border: 1px solid var(--line);
     }
 
@@ -124,7 +209,7 @@
 
     .meta-item {
       padding: 16px;
-      background: rgba(255, 255, 255, 0.72);
+      background: var(--card-soft);
       border: 1px solid var(--line);
       border-radius: 16px;
     }
@@ -163,8 +248,8 @@
     .tag {
       padding: 8px 12px;
       border-radius: 999px;
-      background: #111827;
-      color: #fff;
+      background: var(--tag-bg);
+      color: var(--tag-text);
       font-size: 13px;
       font-weight: 700;
     }
@@ -205,7 +290,7 @@
       height: 22px;
       flex: 0 0 22px;
       border-radius: 999px;
-      background: rgba(22, 163, 74, 0.14);
+      background: var(--success-bg);
       color: var(--success);
       display: inline-flex;
       justify-content: center;
@@ -237,7 +322,7 @@
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: linear-gradient(180deg, #fff, #f9fafb);
+      background: linear-gradient(180deg, var(--card-gradient-top), var(--card-gradient-bottom));
     }
 
     .card h3 {
@@ -261,7 +346,7 @@
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: #fff;
+      background: var(--button-secondary-bg);
     }
 
     .faq-item h3 {
@@ -302,30 +387,40 @@
 </head>
 <body>
   <main class="wrap">
+    <div class="toolbar">
+      <div class="toolbar-group" aria-label="Language switcher">
+        <button class="toolbar-button is-active" type="button" data-language="zh">中文</button>
+        <button class="toolbar-button" type="button" data-language="en">EN</button>
+      </div>
+      <div class="toolbar-group" aria-label="Theme switcher">
+        <button class="toolbar-button is-active" type="button" data-theme="color">彩色</button>
+        <button class="toolbar-button" type="button" data-theme="monochrome">黑白</button>
+      </div>
+    </div>
+
     <section class="hero">
       <div class="panel">
-        <div class="badge">67VIP 限时开通</div>
-        <h1>67 元开通 67VIP，立刻升级专属权益</h1>
-        <p class="lead">
-          一次支付，快速开通。适合做会员展示页、活动页或充值落地页，
-          也方便你后续直接接入支付、表单或客服系统。
+        <div class="badge" data-i18n="badge">67VIP 限时开通</div>
+        <h1 data-i18n="heroTitle">67 元开通 67VIP，立刻升级专属权益</h1>
+        <p class="lead" data-i18n="heroLead">
+          一次支付，快速开通。适合做会员展示页、活动页或充值落地页，也方便你后续直接接入支付、表单或客服系统。
         </p>
         <div class="actions">
-          <a class="button button-primary" href="#buy">立即充值 67 元</a>
-          <a class="button button-secondary" href="#benefits">查看权益</a>
+          <a class="button button-primary" href="#buy" data-i18n="primaryAction">立即充值 67 元</a>
+          <a class="button button-secondary" href="#benefits" data-i18n="secondaryAction">查看权益</a>
         </div>
         <div class="meta">
           <div class="meta-item">
-            <strong>67 元</strong>
-            <span>单次开通价</span>
+            <strong data-i18n="metaPriceValue">67 元</strong>
+            <span data-i18n="metaPriceLabel">单次开通价</span>
           </div>
           <div class="meta-item">
-            <strong>7 项</strong>
-            <span>核心会员权益</span>
+            <strong data-i18n="metaBenefitsValue">7 项</strong>
+            <span data-i18n="metaBenefitsLabel">核心会员权益</span>
           </div>
           <div class="meta-item">
-            <strong>24h</strong>
-            <span>在线支持服务</span>
+            <strong data-i18n="metaSupportValue">24h</strong>
+            <span data-i18n="metaSupportLabel">在线支持服务</span>
           </div>
         </div>
       </div>
@@ -333,59 +428,195 @@
       <aside class="price-card" id="buy">
         <div>
           <div class="price-head">
-            <h2>67VIP 充值卡</h2>
-            <span class="tag">热门方案</span>
+            <h2 data-i18n="cardTitle">67VIP 充值卡</h2>
+            <span class="tag" data-i18n="cardTag">热门方案</span>
           </div>
-          <p class="desc">适合作为会员开通页原型，也可直接部署为静态活动页面。</p>
-          <div class="amount">¥67 <small>/ 次</small></div>
+          <p class="desc" data-i18n="cardDesc">适合作为会员开通页原型，也可直接部署为静态活动页面。</p>
+          <div class="amount">
+            <span data-i18n="priceValue">¥67</span>
+            <small data-i18n="priceUnit">/ 次</small>
+          </div>
           <ul class="list">
-            <li><span class="tick">✓</span><span>专属会员身份标识与权益入口</span></li>
-            <li><span class="tick">✓</span><span>优先体验新内容、新活动和限量资格</span></li>
-            <li><span class="tick">✓</span><span>人工客服绿色通道与快速处理支持</span></li>
-            <li><span class="tick">✓</span><span>活动优惠券、会员折扣和专享福利</span></li>
+            <li><span class="tick">✓</span><span data-i18n="benefitList1">专属会员身份标识与权益入口</span></li>
+            <li><span class="tick">✓</span><span data-i18n="benefitList2">优先体验新内容、新活动和限量资格</span></li>
+            <li><span class="tick">✓</span><span data-i18n="benefitList3">人工客服绿色通道与快速处理支持</span></li>
+            <li><span class="tick">✓</span><span data-i18n="benefitList4">活动优惠券、会员折扣和专享福利</span></li>
           </ul>
         </div>
-        <a class="button button-primary" href="mailto:stonezhang201325@gmail.com?subject=67VIP%E5%85%85%E5%80%BC">联系开通</a>
+        <a
+          class="button button-primary"
+          href="mailto:stonezhang201325@gmail.com?subject=67VIP%E5%85%85%E5%80%BC"
+          data-i18n="contactAction"
+        >联系开通</a>
       </aside>
     </section>
 
     <section class="section benefits" id="benefits">
-      <h2 class="section-title">会员权益</h2>
+      <h2 class="section-title" data-i18n="benefitsTitle">会员权益</h2>
       <div class="grid">
         <article class="card">
-          <h3>专属活动</h3>
-          <p>抢先获得活动名额、隐藏福利与专属礼包入口。</p>
+          <h3 data-i18n="benefitsCard1Title">专属活动</h3>
+          <p data-i18n="benefitsCard1Body">抢先获得活动名额、隐藏福利与专属礼包入口。</p>
         </article>
         <article class="card">
-          <h3>快速支持</h3>
-          <p>遇到问题可优先处理，减少等待时间，提升体验效率。</p>
+          <h3 data-i18n="benefitsCard2Title">快速支持</h3>
+          <p data-i18n="benefitsCard2Body">遇到问题可优先处理，减少等待时间，提升体验效率。</p>
         </article>
         <article class="card">
-          <h3>折扣优惠</h3>
-          <p>会员日折扣、充值返利和不定期专享价格同步开放。</p>
+          <h3 data-i18n="benefitsCard3Title">折扣优惠</h3>
+          <p data-i18n="benefitsCard3Body">会员日折扣、充值返利和不定期专享价格同步开放。</p>
         </article>
       </div>
     </section>
 
     <section class="section faq">
-      <h2 class="section-title">常见问题</h2>
+      <h2 class="section-title" data-i18n="faqTitle">常见问题</h2>
       <div class="faq-list">
         <div class="faq-item">
-          <h3>这个页面可以直接部署吗？</h3>
-          <p>可以。当前是纯 HTML 单页，放到 GitHub Pages、静态服务器或任意网页空间都能直接打开。</p>
+          <h3 data-i18n="faq1Title">这个页面可以直接部署吗？</h3>
+          <p data-i18n="faq1Body">可以。当前是纯 HTML 单页，放到 GitHub Pages、静态服务器或任意网页空间都能直接打开。</p>
         </div>
         <div class="faq-item">
-          <h3>可以接支付按钮吗？</h3>
-          <p>可以，后续只需要把“立即充值”替换为你的支付链接、二维码图片或订单表单即可。</p>
+          <h3 data-i18n="faq2Title">可以接支付按钮吗？</h3>
+          <p data-i18n="faq2Body">可以，后续只需要把“立即充值”替换为你的支付链接、二维码图片或订单表单即可。</p>
         </div>
         <div class="faq-item">
-          <h3>能改成你自己的品牌吗？</h3>
-          <p>完全可以，文案、颜色、价格、联系方式和权益内容都能继续按你的需要调整。</p>
+          <h3 data-i18n="faq3Title">能改成你自己的品牌吗？</h3>
+          <p data-i18n="faq3Body">完全可以，文案、颜色、价格、联系方式和权益内容都能继续按你的需要调整。</p>
         </div>
       </div>
     </section>
 
-    <footer>67VIP 开通中心 · HTML 静态页面示例</footer>
+    <footer data-i18n="footer">67VIP 开通中心 · HTML 静态页面示例</footer>
   </main>
+
+  <script>
+    const translations = {
+      zh: {
+        pageTitle: "67VIP 开通中心",
+        badge: "67VIP 限时开通",
+        heroTitle: "67 元开通 67VIP，立刻升级专属权益",
+        heroLead: "一次支付，快速开通。适合做会员展示页、活动页或充值落地页，也方便你后续直接接入支付、表单或客服系统。",
+        primaryAction: "立即充值 67 元",
+        secondaryAction: "查看权益",
+        metaPriceValue: "67 元",
+        metaPriceLabel: "单次开通价",
+        metaBenefitsValue: "7 项",
+        metaBenefitsLabel: "核心会员权益",
+        metaSupportValue: "24h",
+        metaSupportLabel: "在线支持服务",
+        cardTitle: "67VIP 充值卡",
+        cardTag: "热门方案",
+        cardDesc: "适合作为会员开通页原型，也可直接部署为静态活动页面。",
+        priceValue: "¥67",
+        priceUnit: "/ 次",
+        benefitList1: "专属会员身份标识与权益入口",
+        benefitList2: "优先体验新内容、新活动和限量资格",
+        benefitList3: "人工客服绿色通道与快速处理支持",
+        benefitList4: "活动优惠券、会员折扣和专享福利",
+        contactAction: "联系开通",
+        benefitsTitle: "会员权益",
+        benefitsCard1Title: "专属活动",
+        benefitsCard1Body: "抢先获得活动名额、隐藏福利与专属礼包入口。",
+        benefitsCard2Title: "快速支持",
+        benefitsCard2Body: "遇到问题可优先处理，减少等待时间，提升体验效率。",
+        benefitsCard3Title: "折扣优惠",
+        benefitsCard3Body: "会员日折扣、充值返利和不定期专享价格同步开放。",
+        faqTitle: "常见问题",
+        faq1Title: "这个页面可以直接部署吗？",
+        faq1Body: "可以。当前是纯 HTML 单页，放到 GitHub Pages、静态服务器或任意网页空间都能直接打开。",
+        faq2Title: "可以接支付按钮吗？",
+        faq2Body: "可以，后续只需要把“立即充值”替换为你的支付链接、二维码图片或订单表单即可。",
+        faq3Title: "能改成你自己的品牌吗？",
+        faq3Body: "完全可以，文案、颜色、价格、联系方式和权益内容都能继续按你的需要调整。",
+        footer: "67VIP 开通中心 · HTML 静态页面示例"
+      },
+      en: {
+        pageTitle: "67VIP Access Center",
+        badge: "67VIP Limited Access",
+        heroTitle: "Activate 67VIP for ¥67 and unlock premium benefits instantly",
+        heroLead: "A fast one-time activation page for membership campaigns, recharge flows, or landing page demos. It is also easy to connect with payment links, forms, or support tools later.",
+        primaryAction: "Recharge ¥67 Now",
+        secondaryAction: "View Benefits",
+        metaPriceValue: "¥67",
+        metaPriceLabel: "One-time activation",
+        metaBenefitsValue: "7 perks",
+        metaBenefitsLabel: "Core member benefits",
+        metaSupportValue: "24h",
+        metaSupportLabel: "Online support service",
+        cardTitle: "67VIP Recharge Pass",
+        cardTag: "Popular Plan",
+        cardDesc: "Works well as a membership activation prototype and can also be deployed directly as a static event page.",
+        priceValue: "¥67",
+        priceUnit: "/ time",
+        benefitList1: "Exclusive member identity badge and benefit entry point",
+        benefitList2: "Priority access to new content, new events, and limited spots",
+        benefitList3: "Priority support channel with faster manual assistance",
+        benefitList4: "Event coupons, member discounts, and exclusive perks",
+        contactAction: "Contact to Activate",
+        benefitsTitle: "Member Benefits",
+        benefitsCard1Title: "Exclusive Events",
+        benefitsCard1Body: "Get early access to event spots, hidden perks, and member-only gift entries.",
+        benefitsCard2Title: "Fast Support",
+        benefitsCard2Body: "Issues can be handled with priority, reducing wait time and improving the overall experience.",
+        benefitsCard3Title: "Member Discounts",
+        benefitsCard3Body: "Member-day discounts, recharge bonuses, and occasional special pricing are all included.",
+        faqTitle: "FAQ",
+        faq1Title: "Can this page be deployed directly?",
+        faq1Body: "Yes. It is a pure HTML single-page site and can be opened through GitHub Pages, a static server, or any web hosting space.",
+        faq2Title: "Can I connect a payment button?",
+        faq2Body: "Yes. You can later replace the recharge button with your payment link, QR code image, or an order form.",
+        faq3Title: "Can this be rebranded?",
+        faq3Body: "Absolutely. The copy, colors, pricing, contact details, and benefits can all be adjusted to fit your own brand.",
+        footer: "67VIP Access Center · Static HTML Page Demo"
+      }
+    };
+
+    const root = document.documentElement;
+    const body = document.body;
+    const languageButtons = document.querySelectorAll("[data-language]");
+    const themeButtons = document.querySelectorAll("[data-theme]");
+    const translatableNodes = document.querySelectorAll("[data-i18n]");
+
+    function setActiveButton(buttons, activeValue, key) {
+      buttons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset[key] === activeValue);
+      });
+    }
+
+    function applyLanguage(language) {
+      const dictionary = translations[language] || translations.zh;
+
+      translatableNodes.forEach((node) => {
+        const translationKey = node.dataset.i18n;
+        if (dictionary[translationKey]) {
+          node.textContent = dictionary[translationKey];
+        }
+      });
+
+      root.lang = language === "en" ? "en" : "zh-CN";
+      document.title = dictionary.pageTitle;
+      localStorage.setItem("67vip-language", language);
+      setActiveButton(languageButtons, language, "language");
+    }
+
+    function applyTheme(theme) {
+      const monochrome = theme === "monochrome";
+      body.classList.toggle("theme-monochrome", monochrome);
+      localStorage.setItem("67vip-theme", monochrome ? "monochrome" : "color");
+      setActiveButton(themeButtons, monochrome ? "monochrome" : "color", "theme");
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language));
+    });
+
+    themeButtons.forEach((button) => {
+      button.addEventListener("click", () => applyTheme(button.dataset.theme));
+    });
+
+    applyLanguage(localStorage.getItem("67vip-language") || "zh");
+    applyTheme(localStorage.getItem("67vip-theme") || "color");
+  </script>
 </body>
 </html>
