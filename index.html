@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>67VIP 开通中心</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #ff7a18;
+      --accent-2: #ffb347;
+      --line: #e5e7eb;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255, 179, 71, 0.28), transparent 24rem),
+        linear-gradient(180deg, #fff7ed 0%, var(--bg) 28%, #eef2ff 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .panel,
+    .price-card,
+    .benefits,
+    .faq {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 24px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel {
+      padding: 40px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 122, 24, 0.12);
+      color: #c2410c;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 1.05;
+    }
+
+    .lead {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 14px;
+      border: 0;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 14px 30px rgba(255, 122, 24, 0.28);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .meta-item {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .meta-item strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .meta-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .price-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .price-head h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .amount {
+      margin: 16px 0 4px;
+      font-size: 54px;
+      font-weight: 800;
+    }
+
+    .amount small {
+      font-size: 22px;
+      color: var(--muted);
+    }
+
+    .desc {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .list {
+      margin: 22px 0 26px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--line);
+      line-height: 1.6;
+    }
+
+    .tick {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.14);
+      color: var(--success);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .benefits,
+    .faq {
+      padding: 28px;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 26px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff, #f9fafb);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .card p,
+    .faq-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .grid,
+      .meta {
+        grid-template-columns: 1fr;
+      }
+
+      .panel,
+      .price-card,
+      .benefits,
+      .faq {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .amount {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="panel">
+        <div class="badge">67VIP 限时开通</div>
+        <h1>67 元开通 67VIP，立刻升级专属权益</h1>
+        <p class="lead">
+          一次支付，快速开通。适合做会员展示页、活动页或充值落地页，
+          也方便你后续直接接入支付、表单或客服系统。
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="#buy">立即充值 67 元</a>
+          <a class="button button-secondary" href="#benefits">查看权益</a>
+        </div>
+        <div class="meta">
+          <div class="meta-item">
+            <strong>67 元</strong>
+            <span>单次开通价</span>
+          </div>
+          <div class="meta-item">
+            <strong>7 项</strong>
+            <span>核心会员权益</span>
+          </div>
+          <div class="meta-item">
+            <strong>24h</strong>
+            <span>在线支持服务</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="price-card" id="buy">
+        <div>
+          <div class="price-head">
+            <h2>67VIP 充值卡</h2>
+            <span class="tag">热门方案</span>
+          </div>
+          <p class="desc">适合作为会员开通页原型，也可直接部署为静态活动页面。</p>
+          <div class="amount">¥67 <small>/ 次</small></div>
+          <ul class="list">
+            <li><span class="tick">✓</span><span>专属会员身份标识与权益入口</span></li>
+            <li><span class="tick">✓</span><span>优先体验新内容、新活动和限量资格</span></li>
+            <li><span class="tick">✓</span><span>人工客服绿色通道与快速处理支持</span></li>
+            <li><span class="tick">✓</span><span>活动优惠券、会员折扣和专享福利</span></li>
+          </ul>
+        </div>
+        <a class="button button-primary" href="mailto:stonezhang201325@gmail.com?subject=67VIP%E5%85%85%E5%80%BC">联系开通</a>
+      </aside>
+    </section>
+
+    <section class="section benefits" id="benefits">
+      <h2 class="section-title">会员权益</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>专属活动</h3>
+          <p>抢先获得活动名额、隐藏福利与专属礼包入口。</p>
+        </article>
+        <article class="card">
+          <h3>快速支持</h3>
+          <p>遇到问题可优先处理，减少等待时间，提升体验效率。</p>
+        </article>
+        <article class="card">
+          <h3>折扣优惠</h3>
+          <p>会员日折扣、充值返利和不定期专享价格同步开放。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <h2 class="section-title">常见问题</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>这个页面可以直接部署吗？</h3>
+          <p>可以。当前是纯 HTML 单页，放到 GitHub Pages、静态服务器或任意网页空间都能直接打开。</p>
+        </div>
+        <div class="faq-item">
+          <h3>可以接支付按钮吗？</h3>
+          <p>可以，后续只需要把“立即充值”替换为你的支付链接、二维码图片或订单表单即可。</p>
+        </div>
+        <div class="faq-item">
+          <h3>能改成你自己的品牌吗？</h3>
+          <p>完全可以，文案、颜色、价格、联系方式和权益内容都能继续按你的需要调整。</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>67VIP 开通中心 · HTML 静态页面示例</footer>
+  </main>
+</body>
+</html>
