@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>67VIP 会员中心</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --bg-soft: #fff7ed;
+      --bg-deep: #ebf1ff;
+      --card: rgba(255, 255, 255, 0.95);
+      --card-solid: #ffffff;
+      --card-soft: rgba(255, 255, 255, 0.75);
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #ff7a18;
+      --accent-2: #ffb347;
+      --accent-text: #c2410c;
+      --line: #e5e7eb;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+      --success: #15803d;
+      --success-bg: rgba(21, 128, 61, 0.12);
+      --warn-bg: #f3f4f6;
+      --warn-text: #4b5563;
+    }
+
+    body.theme-monochrome {
+      --bg: #f2f2f2;
+      --bg-soft: #fafafa;
+      --bg-deep: #e7e7e7;
+      --card: rgba(255, 255, 255, 0.95);
+      --card-solid: #ffffff;
+      --card-soft: rgba(245, 245, 245, 0.92);
+      --text: #111111;
+      --muted: #4b5563;
+      --accent: #111111;
+      --accent-2: #666666;
+      --accent-text: #111111;
+      --line: #d4d4d4;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      --success: #111111;
+      --success-bg: rgba(17, 17, 17, 0.1);
+      --warn-bg: #ececec;
+      --warn-text: #4b5563;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255, 179, 71, 0.2), transparent 24rem),
+        linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 30%, var(--bg-deep) 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 20px 72px;
+    }
+
+    .topbar,
+    .card,
+    .hero-panel,
+    .table-card,
+    .timeline-card {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .brand-copy strong,
+    .brand-copy span {
+      display: block;
+    }
+
+    .brand-copy span {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .nav,
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav a,
+    .nav button,
+    .toolbar button,
+    .button {
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .toolbar-group {
+      display: inline-flex;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card-solid);
+    }
+
+    .toolbar-button.is-active {
+      background: var(--text);
+      color: #ffffff;
+    }
+
+    .hero-panel {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 122, 24, 0.12);
+      color: var(--accent-text);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+    }
+
+    .hero-copy p,
+    .muted {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: transform 0.18s ease;
+    }
+
+    .button-primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: var(--card-solid);
+      border: 1px solid var(--line);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .status-card,
+    .mini-card {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card-soft);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .status-pill.active {
+      color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .status-pill.pending {
+      color: var(--warn-text);
+      background: var(--warn-bg);
+    }
+
+    .mini-grid,
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .card h2,
+    .table-card h2,
+    .timeline-card h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .stat-value {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .table-card,
+    .timeline-card {
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      background: var(--card-soft);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .timeline-item {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--card-solid);
+    }
+
+    .timeline-item strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-panel,
+      .mini-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">67</div>
+        <div class="brand-copy">
+          <strong data-i18n="brandTitle">67VIP Dashboard</strong>
+          <span data-i18n="brandSubtitle">演示版会员中心</span>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="index.html" data-i18n="navHome">返回首页</a>
+      </div>
+      <div class="toolbar">
+        <div class="toolbar-group">
+          <button class="toolbar-button" type="button" data-language="zh">中文</button>
+          <button class="toolbar-button" type="button" data-language="en">EN</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="toolbar-button" type="button" data-theme="color">彩色</button>
+          <button class="toolbar-button" type="button" data-theme="monochrome">黑白</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <div class="badge" data-i18n="badge">67VIP 会员中心</div>
+        <h1 data-i18n="heroTitle">欢迎回来，查看你的 67VIP 状态与权益</h1>
+        <p class="muted" data-i18n="heroBody">这是一个适合 GitHub Pages 展示的假数据 dashboard。首页输入激活码后，这里会同步显示会员状态、邮箱和最近活动。</p>
+        <div class="actions">
+          <a class="button button-primary" href="index.html" data-i18n="primaryAction">继续激活</a>
+          <a class="button button-secondary" href="index.html#compare" data-i18n="secondaryAction">查看权益对比</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="status-card">
+          <div id="statusPill" class="status-pill pending" data-i18n="statusPending">待激活</div>
+          <h2 id="memberName">VIP Member</h2>
+          <p class="muted" id="memberEmail">vip@example.com</p>
+          <p class="muted" id="memberSince" data-i18n="statusSincePending">完成激活后，这里会显示开通时间。</p>
+        </div>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong class="stat-value" id="memberLevel">67VIP</strong>
+            <span class="muted" data-i18n="memberLevelLabel">当前等级</span>
+          </div>
+          <div class="mini-card">
+            <strong class="stat-value" id="memberScore">670</strong>
+            <span class="muted" data-i18n="memberScoreLabel">会员积分</span>
+          </div>
+          <div class="mini-card">
+            <strong class="stat-value" id="memberPerks">7</strong>
+            <span class="muted" data-i18n="memberPerksLabel">可用权益</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-grid">
+      <article class="card">
+        <h2 data-i18n="summary1Title">激活状态</h2>
+        <div class="stat-value" id="statusText">Pending</div>
+        <p class="muted" data-i18n="summary1Body">你可以把这里改造成真实接口返回的会员状态卡片。</p>
+      </article>
+      <article class="card">
+        <h2 data-i18n="summary2Title">最近权益</h2>
+        <div class="stat-value" data-i18n="summary2Value">3</div>
+        <p class="muted" data-i18n="summary2Body">包括快速支持、专属折扣与活动资格。</p>
+      </article>
+      <article class="card">
+        <h2 data-i18n="summary3Title">到期时间</h2>
+        <div class="stat-value" id="expiryText">--</div>
+        <p class="muted" data-i18n="summary3Body">演示版默认显示激活后 67 天的状态。</p>
+      </article>
+    </section>
+
+    <section class="table-card">
+      <h2 data-i18n="tableTitle">权益面板</h2>
+      <p class="muted" data-i18n="tableBody">这个表格可以继续扩展成任务记录、订单历史或者邀请码管理。</p>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="tableCol1">项目</th>
+            <th data-i18n="tableCol2">状态</th>
+            <th data-i18n="tableCol3">说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="perk1Title">专属活动名额</td>
+            <td id="perk1Status" data-i18n="perkActive">已开启</td>
+            <td data-i18n="perk1Body">优先报名限量活动与会员专场。</td>
+          </tr>
+          <tr>
+            <td data-i18n="perk2Title">客服绿色通道</td>
+            <td id="perk2Status" data-i18n="perkActive">已开启</td>
+            <td data-i18n="perk2Body">优先进入人工支持队列。</td>
+          </tr>
+          <tr>
+            <td data-i18n="perk3Title">会员专享折扣</td>
+            <td id="perk3Status" data-i18n="perkActive">已开启</td>
+            <td data-i18n="perk3Body">活动页和会员日自动显示专属价格。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="timeline-card">
+      <h2 data-i18n="timelineTitle">最近动态</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <strong data-i18n="timeline1Title">系统同步会员状态</strong>
+          <span class="muted" id="timelineSync" data-i18n="timeline1Body">等待首页激活动作写入本地数据。</span>
+        </div>
+        <div class="timeline-item">
+          <strong data-i18n="timeline2Title">权益中心更新</strong>
+          <span class="muted" data-i18n="timeline2Body">已加入会员权益对比与展示面板。</span>
+        </div>
+        <div class="timeline-item">
+          <strong data-i18n="timeline3Title">GitHub Pages 在线展示</strong>
+          <span class="muted" data-i18n="timeline3Body">当前页面适合直接对外展示原型和交互流程。</span>
+        </div>
+      </div>
+    </section>
+
+    <footer data-i18n="footer">67VIP 会员中心 · 演示型 Dashboard 页面</footer>
+  </main>
+
+  <script>
+    const translations = {
+      zh: {
+        pageTitle: "67VIP 会员中心",
+        brandTitle: "67VIP Dashboard",
+        brandSubtitle: "演示版会员中心",
+        navHome: "返回首页",
+        badge: "67VIP 会员中心",
+        heroTitle: "欢迎回来，查看你的 67VIP 状态与权益",
+        heroBody: "这是一个适合 GitHub Pages 展示的假数据 dashboard。首页输入激活码后，这里会同步显示会员状态、邮箱和最近活动。",
+        primaryAction: "继续激活",
+        secondaryAction: "查看权益对比",
+        statusPending: "待激活",
+        statusActive: "已激活",
+        statusSincePending: "完成激活后，这里会显示开通时间。",
+        statusSinceActive: "开通时间：",
+        memberLevelLabel: "当前等级",
+        memberScoreLabel: "会员积分",
+        memberPerksLabel: "可用权益",
+        summary1Title: "激活状态",
+        summary1Body: "你可以把这里改造成真实接口返回的会员状态卡片。",
+        summary2Title: "最近权益",
+        summary2Value: "3",
+        summary2Body: "包括快速支持、专属折扣与活动资格。",
+        summary3Title: "到期时间",
+        summary3Body: "演示版默认显示激活后 67 天的状态。",
+        tableTitle: "权益面板",
+        tableBody: "这个表格可以继续扩展成任务记录、订单历史或者邀请码管理。",
+        tableCol1: "项目",
+        tableCol2: "状态",
+        tableCol3: "说明",
+        perk1Title: "专属活动名额",
+        perk2Title: "客服绿色通道",
+        perk3Title: "会员专享折扣",
+        perkActive: "已开启",
+        perkInactive: "待开通",
+        perk1Body: "优先报名限量活动与会员专场。",
+        perk2Body: "优先进入人工支持队列。",
+        perk3Body: "活动页和会员日自动显示专属价格。",
+        timelineTitle: "最近动态",
+        timeline1Title: "系统同步会员状态",
+        timeline1Body: "等待首页激活动作写入本地数据。",
+        timeline2Title: "权益中心更新",
+        timeline2Body: "已加入会员权益对比与展示面板。",
+        timeline3Title: "GitHub Pages 在线展示",
+        timeline3Body: "当前页面适合直接对外展示原型和交互流程。",
+        footer: "67VIP 会员中心 · 演示型 Dashboard 页面"
+      },
+      en: {
+        pageTitle: "67VIP Dashboard",
+        brandTitle: "67VIP Dashboard",
+        brandSubtitle: "Demo member center",
+        navHome: "Back to Home",
+        badge: "67VIP Member Center",
+        heroTitle: "Welcome back. Review your 67VIP status and perks",
+        heroBody: "This is a mock dashboard designed for GitHub Pages demos. After entering an activation code on the homepage, the membership status, email, and recent activity will appear here.",
+        primaryAction: "Activate on Home",
+        secondaryAction: "View Comparison",
+        statusPending: "Pending",
+        statusActive: "Active",
+        statusSincePending: "After activation, this area will show the activation time.",
+        statusSinceActive: "Activated at:",
+        memberLevelLabel: "Current tier",
+        memberScoreLabel: "Member score",
+        memberPerksLabel: "Available perks",
+        summary1Title: "Activation Status",
+        summary1Body: "You can later replace this card with real membership data from an API.",
+        summary2Title: "Recent Perks",
+        summary2Value: "3",
+        summary2Body: "Including fast support, exclusive discounts, and event access.",
+        summary3Title: "Expiry",
+        summary3Body: "The demo shows a 67-day membership period after activation.",
+        tableTitle: "Benefit Panel",
+        tableBody: "This table can later become tasks, order history, or invitation code management.",
+        tableCol1: "Item",
+        tableCol2: "Status",
+        tableCol3: "Details",
+        perk1Title: "Exclusive Event Access",
+        perk2Title: "Priority Support Lane",
+        perk3Title: "Member-only Discounts",
+        perkActive: "Enabled",
+        perkInactive: "Pending",
+        perk1Body: "Priority registration for limited campaigns and member-only sessions.",
+        perk2Body: "Moves your support tickets into the faster manual queue.",
+        perk3Body: "Shows special pricing on campaign pages and member days.",
+        timelineTitle: "Recent Activity",
+        timeline1Title: "Membership status sync",
+        timeline1Body: "Waiting for activation data from the homepage.",
+        timeline2Title: "Benefit center updated",
+        timeline2Body: "Comparison and benefit panels have been added to the site.",
+        timeline3Title: "Live on GitHub Pages",
+        timeline3Body: "This page is ready to demo the prototype and core interaction flow.",
+        footer: "67VIP Member Center · Demo Dashboard Page"
+      }
+    };
+
+    const storageKeys = {
+      language: "67vip-language",
+      theme: "67vip-theme",
+      profile: "67vip-profile"
+    };
+
+    const root = document.documentElement;
+    const body = document.body;
+    const languageButtons = document.querySelectorAll("[data-language]");
+    const themeButtons = document.querySelectorAll("[data-theme]");
+    const translatableNodes = document.querySelectorAll("[data-i18n]");
+
+    function getDictionary(language) {
+      return translations[language] || translations.zh;
+    }
+
+    function setActiveButton(buttons, activeValue, key) {
+      buttons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset[key] === activeValue);
+      });
+    }
+
+    function applyLanguage(language) {
+      const dictionary = getDictionary(language);
+      translatableNodes.forEach((node) => {
+        const key = node.dataset.i18n;
+        if (dictionary[key]) {
+          node.textContent = dictionary[key];
+        }
+      });
+      root.lang = language === "en" ? "en" : "zh-CN";
+      document.title = dictionary.pageTitle;
+      localStorage.setItem(storageKeys.language, language);
+      setActiveButton(languageButtons, language, "language");
+      renderProfile();
+    }
+
+    function applyTheme(theme) {
+      const monochrome = theme === "monochrome";
+      body.classList.toggle("theme-monochrome", monochrome);
+      localStorage.setItem(storageKeys.theme, monochrome ? "monochrome" : "color");
+      setActiveButton(themeButtons, monochrome ? "monochrome" : "color", "theme");
+    }
+
+    function readProfile() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKeys.profile)) || null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function formatDate(dateString, language) {
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) {
+        return "--";
+      }
+      return new Intl.DateTimeFormat(language === "en" ? "en-US" : "zh-CN", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }).format(date);
+    }
+
+    function renderProfile() {
+      const language = localStorage.getItem(storageKeys.language) || "zh";
+      const dictionary = getDictionary(language);
+      const profile = readProfile();
+      const statusPill = document.getElementById("statusPill");
+      const memberName = document.getElementById("memberName");
+      const memberEmail = document.getElementById("memberEmail");
+      const memberSince = document.getElementById("memberSince");
+      const statusText = document.getElementById("statusText");
+      const expiryText = document.getElementById("expiryText");
+      const timelineSync = document.getElementById("timelineSync");
+      const perkStatuses = [
+        document.getElementById("perk1Status"),
+        document.getElementById("perk2Status"),
+        document.getElementById("perk3Status")
+      ];
+
+      if (!profile || profile.status !== "active") {
+        statusPill.textContent = dictionary.statusPending;
+        statusPill.className = "status-pill pending";
+        memberName.textContent = "VIP Member";
+        memberEmail.textContent = "vip@example.com";
+        memberSince.textContent = dictionary.statusSincePending;
+        statusText.textContent = dictionary.statusPending;
+        expiryText.textContent = "--";
+        timelineSync.textContent = dictionary.timeline1Body;
+        perkStatuses.forEach((node) => {
+          node.textContent = dictionary.perkInactive;
+        });
+        return;
+      }
+
+      const activatedDate = formatDate(profile.activatedAt, language);
+      const expiryDate = formatDate(new Date(new Date(profile.activatedAt).getTime() + 67 * 24 * 60 * 60 * 1000).toISOString(), language);
+      statusPill.textContent = dictionary.statusActive;
+      statusPill.className = "status-pill active";
+      memberName.textContent = profile.name || "VIP Member";
+      memberEmail.textContent = profile.email || "vip@example.com";
+      memberSince.textContent = dictionary.statusSinceActive + " " + activatedDate;
+      statusText.textContent = dictionary.statusActive;
+      expiryText.textContent = expiryDate;
+      timelineSync.textContent = language === "en"
+        ? "Activation synced from homepage for " + (profile.email || "this member") + "."
+        : "已从首页同步激活信息：" + (profile.email || "该会员") + "。";
+      perkStatuses.forEach((node) => {
+        node.textContent = dictionary.perkActive;
+      });
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.language));
+    });
+
+    themeButtons.forEach((button) => {
+      button.addEventListener("click", () => applyTheme(button.dataset.theme));
+    });
+
+    applyLanguage(localStorage.getItem(storageKeys.language) || "zh");
+    applyTheme(localStorage.getItem(storageKeys.theme) || "color");
+  </script>
+</body>
+</html>
